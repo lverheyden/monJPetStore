@@ -11,5 +11,23 @@ pipeline {
         bat(script: 'runmaven.bat', encoding: 'utf-8')
       }
     }
+	stage('Publication') {
+      steps {
+        nexusArtifactUploader {
+		nexusVersion('nexus3')
+		protocol('http')
+		nexusUrl('localhost:8081/')
+		groupId('monJPetStore')
+        version('1.0')
+        repository('NexusArtifactUploader')
+        credentialsId('nexus')
+        artifact {
+            artifactId('nexus-artifact-uploader')
+            type('jar')
+            classifier('debug')
+            file('nexus-artifact-uploader.jar')
+        }
+      }
+	 }
   }
 }
