@@ -2,7 +2,7 @@ pipeline {
   agent any
   
   environment {
-        MAVEN_HOME = 'C:\Apache\apache-maven-3.5.4'
+        MAVEN_HOME = 'C:\\Apache\\apache-maven-3.5.4'
 	}
 	
   stages {
