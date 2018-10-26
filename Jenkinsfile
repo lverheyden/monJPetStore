@@ -15,6 +15,7 @@ pipeline {
       steps {
         bat(script: 'runquality.bat', encoding: 'utf-8')
       }
+	  waitForQualityGate(abortPipeline: true)
     }
     stage('Publication') {
       steps {
