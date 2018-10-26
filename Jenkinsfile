@@ -1,6 +1,5 @@
 pipeline {
   agent any
-  
   stages {
     stage('Recupération des sources') {
       steps {
@@ -12,26 +11,18 @@ pipeline {
         bat(script: 'runmaven.bat', encoding: 'utf-8')
       }
     }
-	stage('Qualimetrie') {
+    stage('Qualimetrie') {
       steps {
-        bat(script: 'runmaven.bat', encoding: 'utf-8')
+        bat(script: 'runquality.bat', encoding: 'utf-8')
       }
     }
-	stage('Publication') {
+    stage('Publication') {
       steps {
-        nexusArtifactUploader artifacts: [
-			[artifactId: 'jpetstore', classifier: 'debug', file: 'target/jpetstore.war', type: 'war']
-              
-         ],     
-      credentialsId: 'nexus',
-	  groupId: 'monJPetStore',
-	  nexusUrl: 'localhost:8081/',
-	  nexusVersion: 'nexus3',
-	  protocol: 'http',
-	  repository: 'maven-snapshots',
-	  version: '1.0-SNAPSHOT'         
+        nexusArtifactUploader(artifacts: [
+          			[artifactId: 'jpetstore', classifier: 'debug', file: 'target/jpetstore.war', type: 'war']
+                        
+                   ], credentialsId: 'nexus', groupId: 'monJPetStore', nexusUrl: 'localhost:8081/', nexusVersion: 'nexus3', protocol: 'http', repository: 'maven-snapshots', version: '1.0-SNAPSHOT')
+        }
       }
-      
-	 }
+    }
   }
-}
