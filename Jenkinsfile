@@ -12,6 +12,11 @@ pipeline {
         bat(script: 'runmaven.bat', encoding: 'utf-8')
       }
     }
+	stage('Qualimetrie') {
+      steps {
+        bat(script: 'runmaven.bat', encoding: 'utf-8')
+      }
+    }
 	stage('Publication') {
       steps {
         nexusArtifactUploader artifacts: [
